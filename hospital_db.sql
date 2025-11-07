@@ -1,35 +1,36 @@
-CREATE DATABASE IF NOT EXISTS hospital_db;
+CREATE DATABASE hospital_db;
 USE hospital_db;
 
-CREATE TABLE IF NOT EXISTS patients (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    age INT NOT NULL,
+CREATE TABLE patients (
+    patient_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    dob DATE,
     gender VARCHAR(10),
-    contact VARCHAR(15)
+    contact VARCHAR(50),
+    address VARCHAR(255)
 );
 
-CREATE TABLE IF NOT EXISTS doctors (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    specialization VARCHAR(50),
-    contact VARCHAR(15)
+CREATE TABLE doctors (
+    doctor_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    specialization VARCHAR(100),
+    contact VARCHAR(50)
 );
 
-CREATE TABLE IF NOT EXISTS appointments (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE appointments (
+    appointment_id INT AUTO_INCREMENT PRIMARY KEY,
     patient_id INT,
     doctor_id INT,
-    appointment_date DATE,
-    FOREIGN KEY(patient_id) REFERENCES patients(id),
-    FOREIGN KEY(doctor_id) REFERENCES doctors(id)
+    appointment_date DATETIME,
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id),
+    FOREIGN KEY (doctor_id) REFERENCES doctors(doctor_id)
 );
 
-CREATE TABLE IF NOT EXISTS billing (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE billing (
+    bill_id INT AUTO_INCREMENT PRIMARY KEY,
     patient_id INT,
     amount DECIMAL(10,2),
-    billing_date DATE,
-    FOREIGN KEY(patient_id) REFERENCES patients(id)
+    status VARCHAR(20),
+    bill_date DATETIME,
+    FOREIGN KEY (patient_id) REFERENCES patients(patient_id)
 );
-
